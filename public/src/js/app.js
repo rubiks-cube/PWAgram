@@ -86,7 +86,7 @@ function configurePushSub() {
       })
     })
     .then(function(res) {
-      console.log('lololo');
+      
       if (res.ok) {
         displayConfirmNotification();
       }

@@ -1,15 +1,17 @@
 importScripts('/src/js/idb.js');
 importScripts('/src/js/utility.js');
 
-var CACHE_STATIC_NAME = 'static-v25';
-var CACHE_DYNAMIC_NAME = 'dynamic-v2';
+var CACHE_STATIC_NAME = 'static-v48';
+var CACHE_DYNAMIC_NAME = 'dynamic-v7';
 var STATIC_FILES = [
   '/',
   '/index.html',
   '/offline.html',
   '/src/js/app.js',
-  '/src/js/feed.js',
+  '/src/js/utility.js',
   '/src/js/idb.js',
+  '/src/js/feed.js',
+  
   '/src/js/promise.js',
   '/src/js/fetch.js',
   '/src/js/material.min.js',
@@ -78,14 +80,18 @@ self.addEventListener('fetch', function (event) {
   if (event.request.url.indexOf(url) > -1) {
     event.respondWith(fetch(event.request)
       .then(function (res) {
+
         var clonedRes = res.clone();
+
         clearAllData('posts')
           .then(function () {
             return clonedRes.json();
           })
           .then(function (data) {
+            //console.log(data);
             for (var key in data) {
-              writeData('posts', data[key])
+              
+              writeData('posts', data[key]);
             }
           });
         return res;
@@ -189,18 +195,18 @@ self.addEventListener('sync', function(event) {
       readAllData('sync-posts')
         .then(function(data) {
           for (var dt of data) {
+            var postData = new FormData();
+            postData.append('id', dt.id);
+            postData.append('title', dt.title);
+            postData.append('location', dt.location);
+            postData.append('rawLocationLat', dt.rawLocation.lat);
+            postData.append('rawLocationLng', dt.rawLocation.lng);
+            postData.append('file', dt.picture, dt.id + '.png');
+
             fetch('https://us-central1-pwagram-3dad4.cloudfunctions.net/storePostData', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                id: dt.id,
-                title: dt.title,
-                location: dt.location,
-                image: 'https://firebasestorage.googleapis.com/v0/b/pwagram-3dad4.appspot.com/o/sf-boat.jpg?alt=media&token=fdd02898-4eca-4d4d-a2b9-11a61fb79d35'
-              })
+              mode:'cors',
+              body: postData
             })
               .then(function(res) {
                 console.log('Sent data', res);
@@ -277,3 +283,24 @@ self.addEventListener('push', function(event) {
     self.registration.showNotification(data.title, options)
   );
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
