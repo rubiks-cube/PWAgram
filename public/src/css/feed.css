@@ -4,7 +4,7 @@
   width: 100%;
   min-height: calc(100vh - 56px);
   overflow-y: scroll;
-  bottom: 0;
+  bottom: 0px;
   top: 56px;
   background: white;
   text-align: center;
@@ -22,6 +22,11 @@
 
 #create-post #pick-image, #create-post #location-loader {
   display: none;
+}
+
+#create-post #close-create-post-modal-btn{
+
+   position: relative; 
 }
 
 #create-post #capture-btn {
