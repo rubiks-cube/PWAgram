@@ -90,8 +90,8 @@ exports.storePostData = functions.https.onRequest(function(request, response) {
               .then(function() {
                 webpush.setVapidDetails(
                   "mailto:xyz@gmail.com",
-                  "BBGZZuXffUFLCsZHdQG4IZcnhqEcaKRx7bawX8PBx5YV3EL7Hdc-htOnLJVGxiGw89nwu0wyAJA6GZ2dlW_bDRA",
-                  "vY0yP13H2sk7RsS08Qent2KgTUVwNm7cMfuaxukqg_A"
+                  "BBGZZuXffUFLCsZHdQG4IZcnhqEcaKRx7bX8PBx5YV3EL7Hdc-htOnLJVGxiGw89nwu0wyAJA6GZ2dlW_bDRA",
+                  "vY0yP13H2sk7RsS08Qent2KgTUVwXXXXXXaxukqg_A"
                 );
                 return admin
                   .database()
